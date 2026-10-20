@@ -1,0 +1,216 @@
+@import url("https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600&display=swap");
+
+.navbar {
+  background: var(--fondo-superficie);
+  border-bottom: var(--borde-grosor) solid var(--borde-fuerte);
+}
+
+.navbar-interior {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0 var(--espacio-2);
+  min-height: 72px;
+  padding-block: 14px;
+  padding-inline: var(--espacio-4);
+}
+
+.navbar-marca {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--espacio-1);
+  color: var(--color-texto);
+  font-size: 1.125rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navbar-simbolo {
+  box-sizing: border-box;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  color: var(--marca-acento);
+  background: var(--marca-primario);
+  border: 2px solid var(--borde-fuerte);
+}
+
+.navbar-simbolo svg {
+  width: 16px;
+  height: 16px;
+}
+.navbar-panel {
+  display: none;
+}
+
+.navbar-panel.is-abierto {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-2);
+  width: 100%;
+  padding-top: var(--espacio-2);
+}
+
+.navbar-enlaces {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espacio-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navbar-enlaces a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: var(--espacio-1);
+  color: var(--texto-principal);
+  border: var(--borde-grosor) solid transparent;
+  font-size: var(--texto-pequeno);
+  text-decoration: none;
+  padding: var(--espacio-2) var(--espacio-3);
+  border-radius: 999px;
+  box-sizing: border-box;
+}
+
+.navbar-accion {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: var(--espacio-2) var(--espacio-4);
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  box-shadow: var(--sombra-pop-pequena);
+  border-radius: 999px;
+  color: var(--texto-principal);
+  background: var(--fondo-superficie);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.navbar-accion--primario {
+  background: var(--marca-primario);
+  color: var(--texto-inverso);
+}
+
+.navbar-sesion {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+.navbar-accion:hover {
+  background: var(--color-primario-hover);
+  color: var(--color-sobre-primario);
+}
+
+.navbar-button {
+  display: inline-flex;
+  height: 44px;
+  width: 44px;
+  border-radius: 999px;
+  border: var(--borde-grosor) solid var(--borde-fuerte);
+  align-items: center;
+  justify-content: center;
+  background: var(--fondo-superficie);
+}
+
+.navbar-movil-acciones {
+  display: flex;
+  align-items: center;
+  gap: var(--espacio-2);
+}
+
+@media (min-width: 768px) {
+  .navbar-interior {
+    flex-wrap: nowrap;
+    gap: 40px;
+  }
+
+  .navbar-enlaces a {
+    display: flex;
+    align-items: center;
+    padding-block: 6px;
+    padding-inline: var(--espacio-3);
+    border: var(--borde-grosor) solid transparent;
+    border-radius: 999px;
+    color: var(--texto-principal);
+    font-size: var(--texto-pequeno);
+    text-decoration: none;
+  }
+
+  .navbar-enlaces a:hover {
+    color: var(--texto-marca);
+    background: var(--marca-primario-suave);
+    border-color: var(--borde-fuerte);
+  }
+
+  .navbar-panel {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--espacio-3);
+    width: auto;
+    padding-top: 0;
+  }
+
+  .navbar-enlaces {
+    flex-direction: row;
+    gap: var(--espacio-3);
+  }
+
+  .navbar-accion {
+    align-self: auto;
+  }
+  .navbar-simbolo {
+    width: 36px;
+    height: 36px;
+  }
+
+  .navbar-simbolo svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  .navbar-movil-acciones {
+    display: none;
+  }
+
+  .navbar-buscador {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--espacio-1);
+    height: 40px;
+    padding-inline: var(--espacio-2);
+    border-radius: 999px;
+    border: var(--borde-grosor) solid var(--borde-fuerte);
+    background: var(--fondo-sutil);
+  }
+
+  .navbar-buscador svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .navbar-buscador-input {
+    height: 100%;
+    min-width: 200px;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--texto-terciario);
+  }
+
+  .navbar-buscador-input::placeholder {
+    color: var(--texto-suave, #999);
+  }
+}
