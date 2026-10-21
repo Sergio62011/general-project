@@ -1,35 +1,43 @@
 import { useEffect, useRef, useState } from "react";
-import "./Navbar.css";
 import Icono from "./Icono.jsx";
+import "./Navbar.css";
 
 const DESTINOS = {
-  album: "#album",
-  sobres: "#sobres",
-  intercambios: "#intercambios",
-  mundos: "#mundos",
-  ranking: "#ranking",
+  inicio: "#inicio",
+  heroes: "#heroes",
+  marvel: "#marvel",
+  dc: "#dc",
+  equipos: "#equipos",
 };
 
-const Navbar = ({ textos, cargando, error, idioma, onBuscar }) => {
+export default function Navbar({
+  textos,
+  cargando,
+  error,
+  recargar,
+  idioma,
+  cambiarIdioma,
+  activo,
+  onBuscar,
+  textoGrande,
+  alternarTexto,
+}) {
   const [abierto, setAbierto] = useState(false);
   const [busqueda, setBusqueda] = useState("");
   const botonMenu = useRef(null);
   const campoBusqueda = useRef(null);
   const nav = textos?.navbar;
   const ingles = idioma === "en";
-
-  const abrir = nav?.menuMovil?.abrir ?? (ingles ? "Open menu" : "Abrir menú");
+  const abrir =
+    textos?.menuMovil.abrir ?? (ingles ? "Open menu" : "Abrir menú");
   const cerrar =
-    nav?.menuMovil?.cerrar ?? (ingles ? "Close menu" : "Cerrar menú");
-
+    textos?.menuMovil.cerrar ?? (ingles ? "Close menu" : "Cerrar menú");
   const enlaces = Object.entries(nav?.enlaces ?? {}).filter(
     ([clave]) => DESTINOS[clave],
   );
-  console.log(enlaces);
 
   useEffect(() => {
     function cerrarConEscape(evento) {
-      if (!abierto) return;
       if (evento.key === "Escape" && abierto) {
         setAbierto(false);
         botonMenu.current?.focus();
@@ -56,25 +64,44 @@ const Navbar = ({ textos, cargando, error, idioma, onBuscar }) => {
     <header className="navbar">
       <nav
         className="navbar-interior"
-        aria-label={nav?.aria.menu ?? "Menú de navegación"}
+        aria-label={nav?.aria.menu ?? "Navegación principal"}
       >
         <a
-          href="#inicio"
           className="navbar-marca"
+          href="#inicio"
           aria-label={nav?.logo.aria ?? "Inicio"}
           onClick={() => setAbierto(false)}
         >
           <span className="navbar-simbolo" aria-hidden="true">
-            <Icono nombre="logo" />
+            H
           </span>
-          <span className="titular-h3">{nav?.logo.texto ?? "a"}</span>
+          <span>{nav?.logo.texto ?? "Héroes"}</span>
         </a>
 
         <div className="navbar-movil-acciones">
           <button
             type="button"
+            className="navbar-icono"
+            aria-label={nav?.buscador.aria ?? "Buscar"}
+            disabled={!nav}
+            onClick={abrirBusqueda}
+          >
+            <Icono nombre="buscar" />
+          </button>
+          {nav && (
+            <a
+              className="navbar-icono"
+              href="#favoritos"
+              aria-label={nav.botones.favoritos}
+              onClick={() => setAbierto(false)}
+            >
+              <Icono nombre="favoritos" />
+            </a>
+          )}
+          <button
             ref={botonMenu}
-            className="navbar-button"
+            type="button"
+            className="navbar-icono"
             aria-label={abierto ? cerrar : abrir}
             aria-expanded={abierto}
             aria-controls="navbar-panel"
@@ -85,46 +112,97 @@ const Navbar = ({ textos, cargando, error, idioma, onBuscar }) => {
         </div>
 
         <div
+          id="navbar-panel"
           className={`navbar-panel${abierto ? " is-abierto" : ""}`}
           aria-busy={cargando}
-          id="navbar-panel"
         >
-          <ul className="navbar-enlaces">
-            {enlaces.map(([clave, texto]) => (
-              <li key={clave}>
-                <a href={`#${clave}`} className="cuerpo-p-fuerte">
-                  {texto}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <div className="navbar-buscador">
-            <Icono nombre="buscar" />
-            <input
-              type="search"
-              className="navbar-buscador-input cuerpo-p"
-              placeholder={nav?.buscador?.placeholder ?? "Buscar..."}
-              aria-label={nav?.buscador?.aria ?? "Buscar"}
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && buscar(e)}
-            />
-          </div>
-          <div className="navbar-sesion">
-            <a href="#ingresar" className="navbar-accion detalle-nota-fuerte">
-              {nav?.botones?.ingresar ?? "Ingresar"}
-            </a>
-            <a
-              href="#crear-cuenta"
-              className="navbar-accion detalle-nota-fuerte navbar-accion--primario"
+          {cargando && (
+            <p className="navbar-estado" role="status">
+              {ingles ? "Loading navigation…" : "Cargando navegación…"}
+            </p>
+          )}
+          {error && (
+            <div className="navbar-estado" role="alert">
+              <p>
+                {ingles
+                  ? "Navigation could not be loaded."
+                  : "No pudimos cargar el menú."}
+              </p>
+              <button type="button" onClick={recargar}>
+                {ingles ? "Try again" : "Reintentar"}
+              </button>
+            </div>
+          )}
+          {nav && (
+            <>
+              <ul className="navbar-enlaces">
+                {enlaces.map(([clave, etiqueta]) => (
+                  <li key={clave}>
+                    <a
+                      href={DESTINOS[clave]}
+                      aria-current={activo === clave ? "page" : undefined}
+                      onClick={() => setAbierto(false)}
+                    >
+                      {etiqueta}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+              <form
+                className="navbar-buscador"
+                role="search"
+                aria-label={nav.buscador.aria}
+                onSubmit={buscar}
+              >
+                <button type="submit" aria-label={nav.buscador.boton}>
+                  <Icono nombre="buscar" />
+                </button>
+                <input
+                  ref={campoBusqueda}
+                  type="search"
+                  value={busqueda}
+                  onChange={(evento) => setBusqueda(evento.target.value)}
+                  placeholder={nav.buscador.placeholder}
+                  aria-label={nav.buscador.aria}
+                  required
+                />
+              </form>
+            </>
+          )}
+          <div className="navbar-utilidades">
+            <label className="navbar-idioma">
+              <Icono nombre="idioma" />
+              <select
+                value={idioma}
+                onChange={(evento) => cambiarIdioma(evento.target.value)}
+                aria-label={nav?.aria.idioma ?? "Cambiar idioma"}
+              >
+                <option value="es">ES</option>
+                <option value="en">EN</option>
+              </select>
+             < Icono nombre="flechaAbajo"/>
+            </label>
+            <button
+              className="navbar-icono navbar-accesibilidad"
+              type="button"
+              aria-label={ingles ? "Enlarge text" : "Aumentar texto"}
+              aria-pressed={textoGrande}
+              onClick={alternarTexto}
             >
-              {nav?.botones?.crearCuenta ?? "Crear cuenta"}
-            </a>
+              <Icono nombre="accesibilidad" />
+            </button>
+            {nav && (
+              <a
+                className="navbar-accion"
+                href="#favoritos"
+                onClick={() => setAbierto(false)}
+              >
+                {nav.botones.favoritos}
+              </a>
+            )}
           </div>
         </div>
       </nav>
     </header>
   );
-};
-
-export default Navbar;
+}
