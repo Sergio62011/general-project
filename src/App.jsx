@@ -1,6 +1,7 @@
 import { useTextos } from "./hooks/useTextos.js";
 import "./App.css";
 import Navbar from "./components/Navbar";
+import PreferenciasCookies from "./components/PreferenciasCookies.jsx";
 import { useEffect, useState } from "react";
 
 function leerSeccion() {
@@ -61,22 +62,28 @@ function App() {
         texto={textoGrande}
         alternarTexto={() => setTextoGrande((valor) => !valor)}
       />
-      <main className="contenedor demo-contenido"></main>
-      <p>{ingles ? "English content" : "Contenido en español"}</p>
-      <p>{titulo ?? (ingles ? "Navegation" : "Navegacion")}</p>
-      <p role="status">
-        {consulta
-          ? `${ingles ? "Search submitted" : "Busqueda enviada"}: ${consulta}`
-          : ingles
-            ? "Select a link"
-            : "Selecciona un enlace"}
-      </p>
-      <p>
-        
-        {ingles
-          ? "This example loads navegation Labels from the API "
-          : "Este ejemplo carga los tecrtos del menu desde la API"}
-      </p>
+      <main className="contenedor demo-contenido">
+        <p>{ingles ? "English content" : "Contenido en español"}</p>
+        <p>{titulo ?? (ingles ? "Navegation" : "Navegacion")}</p>
+        <p role="status">
+          {consulta
+            ? `${ingles ? "Search submitted" : "Busqueda enviada"}: ${consulta}`
+            : ingles
+              ? "Select a link"
+              : "Selecciona un enlace"}
+        </p>
+        <p>
+          {ingles
+            ? "This example loads navegation Labels from the API "
+            : "Este ejemplo carga los tecrtos del menu desde la API"}
+        </p>
+      </main>
+
+      <footer className="pie-pagina">
+        <div className="contenedor">
+          <PreferenciasCookies />
+        </div>
+      </footer>
     </>
   );
 }
