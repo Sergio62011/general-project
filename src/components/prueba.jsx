@@ -1,12 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const Prueba = () => {
   return (
     <div>
-   <></>
+      <></>
     </div>
-  )
-}
+  );
+};
 
-
-export default Prueba
+export default Prueba;
