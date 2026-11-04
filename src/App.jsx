@@ -4,6 +4,7 @@ import "./styles/index.css";
 import Navbar from "./components/Navbar/Navbar.jsx";
 import PreferenciasCookies from "./components/PreferenciasCookies.jsx";
 import { useEffect, useState } from "react";
+import PublicLayout from "./layouts/PublicLayout.js";
 
 function leerSeccion() {
   return window.location.hash.slice(1) || "inicio";
