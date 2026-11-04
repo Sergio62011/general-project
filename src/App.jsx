@@ -95,7 +95,6 @@ function App() {
         </header>
         <div className="pagina-formularios"></div>
       </main>
-      <PublicLayout />
     </>
   );
 }
