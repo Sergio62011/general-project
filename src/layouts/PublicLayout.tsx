@@ -1,14 +1,15 @@
 import React from "react";
+
 import Navbar from "../components/Navbar/Navbar";
 import { Sesion } from "../model";
 import { Outlet } from "react-router-dom";
-import { Footer } from "../Pages/Inicio";
+import { Footer } from "../components/Footer/Footer";
 
 const PublicLayout = ({
   usuario,
   iniciarSesion,
   cerrarSesion,
-  //cambiarContrasena,
+ // cambiarContrasena,
 }: Sesion) => {
   return (
     <div className="sitio">
@@ -25,7 +26,7 @@ const PublicLayout = ({
               usuario,
               iniciarSesion,
               cerrarSesion,
-           //   cambiarContrasena,
+             // cambiarContrasena,
             } satisfies Sesion
           }
         />

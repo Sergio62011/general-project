@@ -3,10 +3,9 @@ import type { Usuario } from "./model";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import PublicLayout from "./layouts/PublicLayout";
-import { Footer as Inicio } from "./Pages/Inicio";
-import { Ingresar } from "./Pages/Ingresar";
+import Inicio from "./Pages/Inicio";
 import Acerca from "./Pages/Acerca";
-
+import { Ingresar } from "./Pages/Ingresar";
 
 
 const App = () => {
@@ -28,7 +27,7 @@ const App = () => {
       >
         <Route index element={<Inicio />} />
         <Route path="about" element={<Acerca />} />
-        <Route index element={<Ingresar />} />
+        <Route path="sing-in" element={<Ingresar />} />
       </Route>
     </Routes>
   );
