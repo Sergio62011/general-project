@@ -8,7 +8,7 @@ const PublicLayout = ({
   usuario,
   iniciarSesion,
   cerrarSesion,
-  cambiarContrasena,
+  //cambiarContrasena,
 }: Sesion) => {
   return (
     <div className="sitio">
@@ -25,7 +25,7 @@ const PublicLayout = ({
               usuario,
               iniciarSesion,
               cerrarSesion,
-              cambiarContrasena,
+           //   cambiarContrasena,
             } satisfies Sesion
           }
         />
